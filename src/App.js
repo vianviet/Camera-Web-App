@@ -1,12 +1,14 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function App() {
   const videoRef = useRef(null);
+  const [cameraMode, setCameraMode] = useState({ exact: "environment" });
   const getVideo = () => {
     navigator.mediaDevices
       .getUserMedia({
         video: { width: 1000, height: 1000 },
+        facingMode: { exact: "environment" },
       })
       .then((stream) => {
         const video = videoRef.current;
@@ -25,7 +27,7 @@ function App() {
       <div>
         <div>Take a photo</div>
         <video ref={videoRef}></video>
-        <button>Snap</button>
+        <button onClick={() => setCameraMode("user")}>Snap</button>
       </div>
     </div>
   );
